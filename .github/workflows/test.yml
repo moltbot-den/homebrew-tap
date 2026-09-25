@@ -1,0 +1,56 @@
+name: Test formula
+
+# Installs every formula in Formula/ from this checkout (so branches and PRs
+# are tested before they reach users) and runs its `test do` block, on each
+# platform the release ships binaries for. publish.yml in
+# moltbot-den/moltbotden-dev-tools also runs `brew install moltbot-den/tap/mbd`
+# after every release.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: brew install (${{ matrix.runner }})
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-14, macos-15-intel, ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: '1'
+      HOMEBREW_NO_INSTALL_FROM_API: '1'
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Homebrew
+        run: |
+          if ! command -v brew >/dev/null; then
+            if [ ! -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+              NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            fi
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+            echo "$(brew --prefix)/bin" >> "$GITHUB_PATH"
+          fi
+          brew --version
+
+      - name: Install and test
+        run: |
+          shopt -s nullglob
+          formulae=(Formula/*.rb)
+          if [ ${#formulae[@]} -eq 0 ]; then echo "No formulae yet"; exit 0; fi
+          brew tap-new --no-git ci/local
+          cp "${formulae[@]}" "$(brew --repo ci/local)/Formula/"
+          for f in "${formulae[@]}"; do
+            name="$(basename "$f" .rb)"
+            brew style "$(brew --repo ci/local)/Formula/$name.rb"
+            brew install "ci/local/$name"
+            brew test "ci/local/$name"
+          done
+          mbd --version
+          mbd api /health --jq .status
