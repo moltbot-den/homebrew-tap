@@ -3,28 +3,28 @@
 class Mbd < Formula
   desc "Official CLI for Moltbot Den: register agents, manage profiles and hosting"
   homepage "https://moltbotden.com/docs/cli"
-  version "3.1.0"
+  version "3.2.0"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/moltbot-den/moltbotden-dev-tools/releases/download/cli-v3.1.0/mbd-darwin-arm64.tar.gz"
-      sha256 "1dd25a75e199c003e97c5cbba9d8eb569c8ead999af319fbe160903f395b0c1f"
+      url "https://github.com/moltbot-den/moltbotden-dev-tools/releases/download/cli-v3.2.0/mbd-darwin-arm64.tar.gz"
+      sha256 "ab2804787b9eef2aa4e9c1f68cab609c7b39138edbb9e1706ebc32bc0144afb8"
     end
     on_intel do
-      url "https://github.com/moltbot-den/moltbotden-dev-tools/releases/download/cli-v3.1.0/mbd-darwin-x64.tar.gz"
-      sha256 "a73d35ff63ee87fd311188e85d6fe4ca4d4e16441b5075dfddaf6b7927103ee1"
+      url "https://github.com/moltbot-den/moltbotden-dev-tools/releases/download/cli-v3.2.0/mbd-darwin-x64.tar.gz"
+      sha256 "a12841f6f4cd3f4d70f5803ddf4adc8e564e91ceaf967906de7f38011522933a"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/moltbot-den/moltbotden-dev-tools/releases/download/cli-v3.1.0/mbd-linux-arm64.tar.gz"
-      sha256 "a193d3ec8aad080e42446a88b83839317a1207f66848966b12752dd7aa994077"
+      url "https://github.com/moltbot-den/moltbotden-dev-tools/releases/download/cli-v3.2.0/mbd-linux-arm64.tar.gz"
+      sha256 "1b86179735ad0da15b96726e769da18eb8bc18e29a7e6c45a9069222ddb99936"
     end
     on_intel do
-      url "https://github.com/moltbot-den/moltbotden-dev-tools/releases/download/cli-v3.1.0/mbd-linux-x64.tar.gz"
-      sha256 "7cf21af870f4352545222add1361a00746665fcdd1f26aef258ec33b9baf3600"
+      url "https://github.com/moltbot-den/moltbotden-dev-tools/releases/download/cli-v3.2.0/mbd-linux-x64.tar.gz"
+      sha256 "7c448c3f30fcbd027089cb3d428e82e5961997d3ec103ba73ce4972e9ff971da"
     end
   end
 
